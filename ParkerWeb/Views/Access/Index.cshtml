@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccess.cshtml";
+}
+
+
+<h4 class="mt-1 mb-5 pb-1 text-center">
+    <a class="" href="@Url.Action("Index", "Home")">
+        <i class="fas fa-arrow-circle-left"></i>
+        Regresar
+    </a>
+</h4>
+
+@{
+    if (ViewBag.Error != null)
+    {
+        <div class="form-floating mb-3">
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Error
+            </div>
+        </div>
+    }
+}
+
+
+<form action="@Url.Action("Index","Access")" method="post" id="Form" novalidate>
+    <div class="form-floating mb-3">
+        <input class="form-control" name="mail" type="email" placeholder="name@example.com" autocomplete="off" required /> <!--Atributo name igual al del metodo-->
+        <label for="inputEmail">Correo Electrónico</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input class="form-control" name="psswd" type="password" placeholder="Clave de acceso" autocomplete="off" required />
+        <!--Atributo name igual al del metodo-->
+        <label for="inputPassword">Clave de acceso</label>
+        <a class=" mb-2" href="@Url.Action("RestorePassword","Access")">¿Has olvidado tu clave de acceso?</a>
+    </div>
+
+    <div class="d-grid">
+        <button class="btn btn-dark btn-block mb-2" type="submit">Ingresar</button>
+        <a class="btn btn-dark mb-2" href="@Url.Action("CheckIn","Access")">Registrarse</a>
+    </div>
+</form>
+
+
+
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#Form').validate({
+                rules: {
+                    mail: {
+                        required: true,
+                        email: true
+                    },
+                    psswd: {
+                        required: true
+                    }
+                },
+                messages: {
+                    mail: {
+                        required: "Por favor, ingresa un correo electronico",
+                        email: "Por favor, ingresa un correo electronico valido"
+                    },
+                    psswd: {
+                        required: "Por favor, ingresa una clave de acceso"
+                    }
+                },
+                errorElement: "div",
+                errorClass: "invalid-feedback",
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                    $(element).closest('.form-floating').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                    $(element).closest('.form-floating').removeClass('has-error').addClass('has-success');
+                },
+                errorPlacement: function (error, element) {
+                    if (element.closest('.form-floating').length) {
+                        error.insertAfter(element.closest('.form-floating'));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    // Aqu� puedes realizar cualquier acci�n adicional antes de enviar el formulario, como una solicitud AJAX para verificar las credenciales
+                    form.submit();
+                }
+            });
+            // Limpiar los estilos de validaci�n cuando se escriba en los campos
+            $('input').on('input', function () {
+                $(this).removeClass('is-invalid').closest('.form-floating').removeClass('has-error');
+            });
+        });
+    </script>
+
+    @*<script>
+            var form = document.getElementById('Form');
+            if (form.checkValidity() == false) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+            }
+
+        </script>*@
+
+    @*<script>
+            window.addEventListener('load', function () {
+                var form = document.getElementById('loginForm');
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        form.classList.add('was-validated');
+                    }
+                }, false);
+            }, false);
+        </script>*@
+}
+
+@*<script src="~/Scripts/bootstrap.bundle.js"></script>
+    </body>
+    </html>*@

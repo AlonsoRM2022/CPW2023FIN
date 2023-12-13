@@ -1,0 +1,273 @@
+﻿
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+<ol class="breadcrumb mb-4 mt-4">
+    <!--    LISTA DE NAVEGACION     -->
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Inicio</a></li>
+    <li class="breadcrumb-item active">Publicaciones</li>
+</ol>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-boxes me-1"></i> Lista de Publicaciones
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="callModal(null)">Nueva Publicaci&oacute;n</button>
+            </div>
+        </div>
+        <hr /> <!--    LINEA DE DIVISION    -->
+        <!--    TABLA    -->
+        <table id="tablePosts" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Contenido </th>
+                    <th>Fecha </th>
+                    <th>Usuario</th>
+                    @*<th>Acciones </th>*@
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> <!--    X    -->
+            </div>
+            <!--    MENSAJE DE ERROR    -->
+            <div class="row g-2">
+                <div class="col-12">
+                    <div id="errorMessage" class="alert alert-danger mt-4" role="alert">
+                        A simple danger alert—check it out!
+                    </div>
+                </div>
+            </div>
+            <!--    FORMULARIO    -->
+            <div class="modal-body">
+                <input id="txtPostID" type="hidden" value="0" /> <!--   ID  -->
+                <form class="row" id="formContainer" novalidate>
+                    <div class="row g-2">
+                        <div class="col-sm-6">
+                            <label for="txtPostTitle" class="form-label">Titulo de la publicaci&oacute;n</label>
+                            <input type="text" class="form-control" id="txtPostTitle" placeholder="Titulo" autocomplete="off" required>
+                            @*<div class="invalid-feedback">
+                                    Por favor ingresa un nombre válido.
+                                </div>*@
+                        </div>
+                        @*<div class="col-sm-6">
+                                <label class="form-label">Usuario</label>
+                                <select id="cboUsers" class="form-select" required>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Por favor, selecciona una opción.
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-sm-12">
+                            <label for="txtPostContent" class="form-label">Publicaci&oacute;n</label>
+                            <textarea type="text" class="form-control" id="txtPostContent" placeholder="" autocomplete="off" required></textarea>
+                            @*<div class="invalid-feedback">
+                                    Por favor ingresa un texto válido.
+                                </div>*@
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--    BOTONES    -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="SaveModal()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <!--    SCRIPTS    -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    <script>
+
+        function formatDateFromServer(dateString) {
+            const timestamp = parseInt(dateString.match(/\d+/)[0]);
+            const date = new Date(timestamp);
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+    var content = new FroalaEditor('#txtPostContent');
+    $(document).ready(function () {
+
+    });
+
+    tableData = $("#tablePosts").DataTable({
+        responsive: true,
+        ordering: false,
+        "ajax": {
+            url: '@Url.Action("ListPosts", "Blog")',
+            type: "GET",
+            dataType: "json"
+        },
+        "columns": [
+            { "data": "postTitle" },
+            {
+                "data": "postContent",
+                "render": function (data) {
+                    const maxLength = 50; // Longitud máxima que deseas mostrar
+                    if (data.length > maxLength) {
+                        return data.substring(0, maxLength) + '...'; // Mostrar solo los primeros caracteres con "..."
+                    } else {
+                        return data; // Si el contenido es menor a la longitud máxima, mostrarlo sin cambios
+                    }
+                }
+            },
+            {
+                "data": "postDate",
+                "render": function (data) {
+                    return formatDateFromServer(data);
+                }
+            },
+            {
+                "data": "objUser", "render": function (data) {
+                    return data.userName
+                }
+            }
+        ],
+        "language": {
+            "url":"https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+        }
+    });
+
+
+    jQuery.ajax({
+        url: '@Url.Action("ListUsers", "Admin")',
+        type: "GET",
+        data: null,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccione un Usuario").appendTo("#cboUsers");
+            $.each(data.data, function (index, item)
+            {
+                $("<option>").attr({ "value": item.userID }).text(item.userName + " " + item.userLastName).appendTo("#cboUsers");
+            })
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
+
+    function SaveModal() {
+    var form = document.getElementById('formContainer');
+    if (form.checkValidity() == false) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.classList.add('was-validated');
+    } else {
+        form.classList.remove('was-validated');
+        var Post = {
+            postID: $("#txtPostID").val(),
+            postTitle: $("#txtPostTitle").val(),
+            postContent: $("#txtPostContent").val()
+        }
+        var request = new FormData();
+        request.append("publication", JSON.stringify(Post))
+        jQuery.ajax({
+            url: '@Url.Action("SavePost", "Blog")',
+            type: "POST",
+            data: request,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $("#formContainer").LoadingOverlay("hide");
+                if (Post.postID == 0) {
+                    if (data.idPostGenerate != 0) {
+                        Post.postID = data.idPostGenerate;
+                        tableData.row.add(Post).draw(false);
+                    } else {
+                        $("#errorMessage").text(data.Message);
+                        $("#errorMessage").show();
+                        return; // No cerrar el modal si hay un error
+                    }
+                } else {
+                    if (!data.successfulOperation) {
+                        $("#errorMessage").text(data.Message);
+                        $("#errorMessage").show();
+                        return; // No cerrar el modal si hay un error
+                    }
+                    tableData.row(selected).data(Post).draw(false);
+                    selected = null;
+                }
+                $("#FormModal").modal("hide");  // Cerrar el modal manualmente
+            },
+            error: function (error) {
+                console.log("Check 3")
+                $("#formContainer").LoadingOverlay("hide");
+                $("#errorMessage").text("Error en el ajax");
+                $("#errorMessage").show();
+            },
+            beforeSend: function () {
+                $("#formContainer").LoadingOverlay("show", {
+                    imageResizeFactor: 2,
+                    text: "Cargando...",
+                    size: 14
+                })
+            }
+        });
+    }
+}
+
+        /*      MODAL     */
+        function callModal(json) {
+            $("#txtPostID").val(0);
+            $("#txtPostTitle").val("");
+            $("#txtPostContent").val("");
+            //$("#cboUsers").val($("#cboUsers option:first").val());
+
+            $("#errorMessage").hide();
+            if (json != null) {
+                $("#txtPostID").val(json.postID);
+                $("#txtPostTitle").val(json.postTitle);
+                $("#txtPostContent").val(json.postContent);
+                //$("#cboUsers").val(json.objUser.userID);
+            }
+            $("#FormModal").modal("show");
+        }
+
+
+        $("#txtPostContent").on('froalaEditor.contentChanged', function (e, editor) {
+            // Actualizar la validación del formulario cuando cambie el contenido del editor
+            form.classList.remove('was-validated');
+        });
+
+        // Evento al cerrar el modal
+        $('#FormModal').on('hidden.bs.modal', function (e) {
+            // Limpiar el contenido del editor al cerrar el modal
+            content.html.set('');
+            // Limpiar los mensajes de error al cerrar el modal
+            $(".invalid-feedback").hide();
+        });
+
+    </script>
+}

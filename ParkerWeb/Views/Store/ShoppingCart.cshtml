@@ -1,0 +1,464 @@
+﻿
+@{
+    //ViewBag.Title = "Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="showcase-areaTienda" id="showcase">
+    <div class="overlay"></div>
+    <div class="showcase-container">
+        <h1 class="main-title" id="home">Casa Parker</h1>
+        <p>Carrito de Compras</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <!--  Detalle Producto-->
+                        <div class="col-sm-9">
+                            <div class="me-2">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="ms-2 mt-2">Detalle Carrito de compras</h5>
+                                    <a class="btn btn-primary" href="@Url.Action("Index","Store")"><i class="fas fa-cart-plus"> </i> Seguir Comprando</a>
+                                </div>
+                                <hr class="mt-2 mb-2" />
+                                <div id="containerProductsList">
+                                    <div class="card mb-2 productCard">
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-sm-2 align-self-center d-flex justify-content-center">
+                                                    <img class="rounded" src="" style="width:100px;height:100px" />
+                                                </div>
+
+                                                <div class="col-sm-4 align-self-center">
+                                                    <span class="font-wight-bold d-block">Marca</span>
+                                                    <span>Nombre Producto</span>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <span>Precio: $/. 1500</span>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-outline-secondary btnRestar rounded-0">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <input class="form-control inputCantidad p-1 text-center rounded-0" disabled style="width:40px" />
+                                                        <button class="btn btn-outline-secondary btnSumar rounded-0">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <button class="btn btn-outline-danger btnProductDelete"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <label class="align-self-center"><b>Total: &#8353 /.<span id="total">500</span></b></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Detalle Envio-->
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <h5 class="card-title">Detalle de envío</h5>
+                                    <form>
+                                        <div class="mb-2">
+                                            <label for="txtCustomerName">Nombre Contacto</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtCustomerName" autocomplete="off" />
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="txtCustomerPhone">Teléfono</label>
+                                            <input type="tel" class="form-control form-control-sm" id="txtCustomerPhone" autocomplete="off" />
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="txtCustomerAddress">Dirección</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtCustomerAddress" autocomplete="off" />
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="cboProvinces">Provincia</label>
+                                            <select class="form-select form-select-sm" id="cboProvinces"></select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="cboCantons">Cantón</label>
+                                            <select class="form-select form-select-sm" id="cboCantons"></select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="cboDistricts">Distrito</label>
+                                            <select class="form-select form-select-sm" id="cboDistricts"></select>
+                                        </div>
+                                        <div class="d-grid">
+                                            <br />
+                                            <button class="btn btn-success" type="button" onclick="RealizarPago()">
+                                                <i class="fab fa-paypal"></i>  Terminar y Procesar Pago
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+         $(document).ready(function () {
+             jQuery.ajax({
+                 url: '@Url.Action("ListCartProducts", "Store")',
+                 type: "POST",
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (response) {
+                     $("#containerProductsList").html("");
+                     $("#containerProductsList").LoadingOverlay("hide");
+                     $.each(response.data, function (i, item) {
+                        $("<div>").addClass("card mb-2 productCard").append(
+                             $("<div>").addClass("card-body").append(
+                                 $("<div>").addClass("row").append(
+                                     //1
+                                     $("<div>").addClass("col-sm-2 align-self-center d-flex justify-content-center").append(
+                                         $("<img>").addClass("rounded").attr({ "src": "data:image/" + item.objProduct.extension + ";base64," + item.objProduct.base64 })
+                                             .css({"width":"100px","height":"100px"})
+                                     ),
+                                     //2
+                                     $("<div>").addClass("col-sm-4 align-self-center").append(
+                                         $("<span>").addClass("font-wight-bold d-block").text(item.objProduct.objBrand.brandName),
+                                         $("<span>").text(item.objProduct.productName)
+                                     ),
+                                     //3
+                                     $("<div>").addClass("col-sm-2 align-self-center").append(
+                                         $("<span>").text(item.objProduct.productPrice.toFixed(2) + " USD")
+                                     ),
+                                     //4
+                                     $("<div>").addClass("col-sm-2 align-self-center").append(
+                                         $("<div>").addClass("d-flex").append(
+                                             $("<button>").addClass("btn btn-outline-secondary btnRestar rounded-0").append(
+                                                 $("<i>").addClass("fas fa-minus")
+                                             ),
+                                             $("<input>").addClass("form-control inputCantidad p-1 text-center rounded-0").attr({ "disabled": "disabled" })
+                                                 .css({ "width": "40px" })
+                                                 .data("objProduct", item.objProduct)
+                                                 .val(item.scQuantity),
+                                             $("<button>").addClass("btn btn-outline-secondary btnSumar rounded-0").append(
+                                                 $("<i>").addClass("fas fa-plus")
+                                             )
+                                         )
+                                     ),
+                                     //5
+                                     $("<div>").addClass("col-sm-2 align-self-center").append(
+                                         $("<button>").addClass("btn btn-outline-danger btnProductDelete").append(
+                                             $("<i>").addClass("far fa-trash-alt"), " Eliminar")
+                                         .data("productID", item.objProduct.productID)
+                                     )
+                                 )
+                             )
+                         ).appendTo("#containerProductsList")
+                     })
+                     getTotal();
+                 },
+                 error: function (error) {
+                     $("#containerProductsList").LoadingOverlay("hide");
+                 },
+                 beforeSend: function () {
+                     $("#containerProductsList").LoadingOverlay("show");
+                 }
+             })
+             printProvincesList();
+         })
+         function printProvincesList() {
+             $("<option>").attr({ "value": "00","disabled":"disabled","selected":"true"}).text("Seleccionar").appendTo("#cboProvinces")
+             jQuery.ajax({
+                 url: '@Url.Action("GetProvinces", "Store")',
+                 type: "POST",
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     if (data.list != null) {
+                         $.each(data.list, function (i, item) {
+                             $("<option>").attr({ "value": item.provinceID }).text(item.provinceName).appendTo("#cboProvinces")
+                         })
+                         printCantonsList();
+                     }
+                 }
+             })
+         }
+         $("#cboProvinces").on("change", function () {
+             printCantonsList();
+         })
+         function printCantonsList() {
+             $("#cboCantons").html("")
+             $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#cboCantons")
+             jQuery.ajax({
+                 url: '@Url.Action("GetCantons", "Store")',
+                 type: "POST",
+                 data: JSON.stringify({ idProvince: $("#cboProvinces option:selected").val() }),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     if (data.list != null) {
+                         $.each(data.list, function (i, item) {
+                             $("<option>").attr({ "value": item.cantonID }).text(item.cantonName).appendTo("#cboCantons")
+                         })
+                         printDistrictsList();
+                     }
+                 }
+             })
+         }
+         $("#cboCantons").on("change", function () {
+             printDistrictsList();
+         })
+         function printDistrictsList() {
+             $("#cboDistricts").html("")
+             $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#cboDistricts")
+             jQuery.ajax({
+                 url: '@Url.Action("GetDistricts", "Store")',
+                 type: "POST",
+                 data: JSON.stringify({ idCanton: $("#cboCantons option:selected").val() }),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     if (data.list != null) {
+                         $.each(data.list, function (i, item) {
+                             $("<option>").attr({ "value": item.districtID }).text(item.districtName).appendTo("#cboDistricts")
+                         })
+                     }
+                 }
+             })
+         }
+
+         function getTotal() { // cambiar nombre de variables
+             var totalPrice = parseFloat(0)
+             $("input.inputCantidad").each(function (i) {
+                 var price = $(this).data("objProduct").productPrice;
+                 var quantity = parseFloat($(this).val())
+                 var subTotal = price * quantity;
+                 totalPrice += subTotal;
+             })
+             $("#total").text(totalPrice.toFixed(2))
+             $("#total").data("totalPrice", totalPrice)
+         }
+
+         $(document).on("click", ".btnSumar", function () {
+             var divContainer = $(this).parent("div.d-flex");
+             var inputQuantity = $(divContainer).find("input.inputCantidad");
+             var btn = $(this)
+             var productID = $(inputQuantity).data("objProduct").productID;
+             jQuery.ajax({
+                 url: '@Url.Action("OperationCart", "Store")',
+                 type: "POST",
+                 data: JSON.stringify({ productID: productID, add: true }),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     $(btn).LoadingOverlay("hide");
+                     if (data.result) {
+                         var quantity = parseInt($(inputQuantity).val()) + 1;
+                         $(inputQuantity).val(quantity)
+                         getTotal()
+                     } else {
+                         swal("", data.Message, "warning");
+                     }
+                 },
+                 error: function (error) {
+                     $(btn).LoadingOverlay("hide");
+                 },
+                 beforeSend: function () {
+                     $(btn).LoadingOverlay("show");
+                 }
+             })
+         })
+
+
+         $(document).on("click", ".btnRestar", function () {
+             var divContainer = $(this).parent("div.d-flex");
+             var inputQuantity = $(divContainer).find("input.inputCantidad");
+             var btn = $(this)
+             var productID = $(inputQuantity).data("objProduct").productID;
+             var quantity = parseInt($(inputQuantity).val()) - 1;
+             if (quantity >= 1) {
+                 jQuery.ajax({
+                     url: '@Url.Action("OperationCart", "Store")',
+                     type: "POST",
+                     data: JSON.stringify({ productID: productID, add: false }),
+                     dataType: "json",
+                     contentType: "application/json; charset=utf-8",
+                     success: function (data) {
+                         $(btn).LoadingOverlay("hide");
+                         if (data.result) {
+                             $(inputQuantity).val(quantity)
+                             getTotal()
+                         } else {
+                             swal("", data.Message, "warning");
+                         }
+                     },
+                     error: function (error) {
+                         $(btn).LoadingOverlay("hide");
+                     },
+                     beforeSend: function () {
+                         $(btn).LoadingOverlay("show");
+                     }
+                 })
+             }
+         })
+
+
+         $(document).on("click", ".btnProductDelete", function () {
+             var productID = $(this).data("productID");
+             var productCard = $(this).parents("div.productCard");
+             jQuery.ajax({
+                 url: '@Url.Action("DeleteCart", "Store")',
+                 type: "POST",
+                 data: JSON.stringify({ productID: productID }),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     if (data.result) {
+                         productCard.remove();
+                         ShowCartQuantity();
+                         getTotal();
+                     } else {
+                         swal("", data.Message, "warning");
+                     }
+                 }
+             })
+         })
+
+         @*function RealizarPago() {
+             if (parseInt($("#cantidadCarrito").text()) == 0) {
+                 swal("", "No existen productos en el carrito de compras", "warning");
+                 return
+             }
+             if ($("#cboDistricts").val() == null || $("#txtCustomerName").val() == "" || $("#txtCustomerAddress").val() == "" || $("#txtCustomerPhone").val() == "") {
+                 swal("", "Debe completar el formulario de entrega", "warning");
+                 return
+             }
+             var sale = {
+                 totalProducts: $("input.inputCantidad").length,
+                 totalPrice: 0,
+                 contact: $("#txtCustomerName").val(),
+                 districtID: $("#cboDistricts").val(),
+                 saleCustomerNumber: $("#txtCustomerPhone").val(),
+                 address: $("#txtCustomerAddress").val()
+             }
+             var cartList = [];
+             $("input.inputCantidad").each(function (i) {
+                 var product = $(this).data("objProduct");
+                 var scQuantity = parseFloat($(this).val())
+                 cartList.push({
+                     objProduct: product,
+                     scQuantity: scQuantity
+                 })
+             })
+             jQuery.ajax({
+                 url: '@Url.Action("ProcessPayment", "Store")',
+                 type: "POST",
+                 data: JSON.stringify({ objShoppingCart: cartList, objSale: sale}),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                 success: function (data) {
+                     $.LoadingOverlay("hide")
+                     if (data.Status) {
+                         var jsonresult = data.Response;
+                         var links = jsonresult.links;
+                         var resultado = links.find(item => item.rel === "approve");
+                         window.location.href = resultado.href
+                     } else {
+                         swal("", "Vuelva a intentarlo luego", "warning");
+                     }
+                 }, beforeSend: function () {
+                     $.LoadingOverlay("show")
+                 }, error: function (error) {
+                     $.LoadingOverlay("hide")
+                 }
+             })
+         }*@
+
+
+        function RealizarPago()
+        {
+            if (parseInt($("#cantidadCarrito").text()) == 0)
+            {
+                swal("", "No existen productos en el carrito", "warning");
+                return
+            }
+            if ($("#cboDistricts").val() == null || $("#txtCustomerName").val() == "" || $("#txtCustomerAddress").val() == "" || $("#txtCustomerPhone").val() == "")
+            {
+                swal("", "Debe completar todos los datos del envío", "warning");
+                return
+            }
+
+            var Sales = {
+
+                totalProducts: $("input.inputCantidad").length,
+                totalPrice: 0,
+                contact: $("#txtCustomerName").val(),
+                districtID: $("#cboDistricts").val(),
+                saleCustomerNumber: $("#txtCustomerPhone").val(),
+                saleCustomerAddress: $("#txtCustomerAddress").val()
+
+            }
+
+            var listCart = [];
+            $("input.inputCantidad").each(function (i)
+            {
+                var product = $(this).data("objProduct");
+                var scQuantity = parseFloat($(this).val())
+                listCart.push({
+                    objProduct: product,
+                    scQuantity: scQuantity,
+
+                })
+            })
+
+            jQuery.ajax({
+                url: '@Url.Action("ProcessPayment", "Store")',
+                type: "POST",
+                data: JSON.stringify({ oListCart: listCart, oSale: Sales }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.LoadingOverlay("hide")
+                    if (data.Status) {
+
+                        var jsonresult = data.Response;
+                        var links = jsonresult.links;
+                        var result = links.find(item => item.rel === "approve");
+                        window.location.href = result.href
+
+                    } else
+                    {
+                        swal("", "Vuelva a intentarlo luego", "warning");
+                    }
+
+                },
+                beforeSend: function ()
+                {
+                    $.LoadingOverlay("show")
+                },
+                error: function (error)
+                {
+                    $.LoadingOverlay("hide")
+                }
+            })
+
+        }
+
+
+
+    </script>
+}

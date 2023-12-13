@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title> Parker Project</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="@Url.Action("Index", "Admin")">Casa Parker Project</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!"><b>@User.Identity.Name</b></a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="@Url.Action("SignOff", "Access")">Cerrar Sesion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <!--   BARRA LATERAL   -->
+                    <div class="nav">
+                        @{
+                            if (Session["UserRol"] as String == "Administrador")
+                            {
+                                <div class="sb-sidenav-menu-heading">Administrador</div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapsePages">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                    Administraci&oacute;n
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseSales" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSales" aria-expanded="false" aria-controls="pagesCollapseError">
+                                            Ventas
+                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                        </a>
+                                        <div class="collapse" id="pagesCollapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                            <nav class="sb-sidenav-menu-nested nav">
+                                                @*<a class="nav-link" href="@Url.Action("Index", "Admin")">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                                    Dashboard
+                                                </a>*@
+                                                <a class="nav-link" href="@Url.Action(@*"SalesReport", "Admin"*@)">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-dollar-sign"></i></div>
+                                                    Historial de Ventas
+                                                </a>
+                                            </nav>
+                                        </div>
+                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseUsers" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                            Usuarios
+                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                        </a>
+                                        <div class="collapse" id="pagesCollapseUsers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                            <nav class="sb-sidenav-menu-nested nav">
+                                                <a class="nav-link" href="@Url.Action("UsersControl", "Admin")">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                                    Usuarios
+                                                </a>
+                                            </nav>
+                                        </div>
+                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseOthers" aria-expanded="false" aria-controls="pagesCollapseError">
+                                            Otros
+                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                        </a>
+                                        <div class="collapse" id="pagesCollapseOthers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                            <nav class="sb-sidenav-menu-nested nav">
+                                                @*<a class="nav-link" href="@Url.Action("UsersLog", "Maintainer")">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                                    Logs de Usuario
+                                                </a>*@
+                                                @*<a class="nav-link" href="@Url.Action("Errors", "Maintainer")">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                                    Errores
+                                                </a>*@
+                                                <a class="nav-link" href="@Url.Action("FrequentQuestions", "Maintainer")">
+                                                    <div class="sb-nav-link-icon"><i class="fas fa-pen-square"></i></div>
+                                                    Preguntas Frecuentes
+                                                </a>
+                                            </nav>
+                                        </div>
+                                    </nav>
+                                </div>
+                            }
+                            <div class="sb-sidenav-menu-heading">Interfas</div>
+                            if (Session["UserRol"] as String == "Redaccion" || Session["UserRol"] as String == "Administrador")
+                            {
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBlog" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Redacci&oacute;n
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseBlog" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="@Url.Action("Index", "Blog")">
+                                            <div class="sb-nav-link-icon"><i class="fas fa-pen-square"></i></div>
+                                            Crear publicación
+                                        </a>
+                                    </nav>
+                                </div>
+                            }
+                            if (Session["UserRol"] as String != "Redaccion" || Session["UserRol"] as String == "Administrador")
+                            {
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                    Mantenimiento
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                        @{
+                                            if (Session["UserRol"] as String != "Arte" || Session["UserRol"] as String == "Administrador")
+                                            {
+                                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseGallery" aria-expanded="false" aria-controls="pagesCollapseError">
+                                                    Galeria
+                                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                                </a>
+                                                <div class="collapse" id="pagesCollapseGallery" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                                    <nav class="sb-sidenav-menu-nested nav">
+                                                        <a class="nav-link" href="@Url.Action("Art", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
+                                                            Pinturas
+                                                        </a>
+                                                        <a class="nav-link" href="@Url.Action("ArtCategories", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
+                                                            Categorias
+                                                        </a>
+                                                    </nav>
+                                                </div>
+                                            }
+                                            if (Session["UserRol"] as String != "Comidas" || Session["UserRol"] as String == "Administrador")
+                                            {
+                                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseRestaurant" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                                    Restaurante
+                                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                                </a>
+                                                <div class="collapse" id="pagesCollapseRestaurant" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                                    <nav class="sb-sidenav-menu-nested nav">
+                                                        <a class="nav-link" href="@Url.Action("Foods", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-pizza-slice"></i></div>
+                                                            Comidas
+                                                        </a>
+                                                        <a class="nav-link" href="@Url.Action("FoodCategories", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-pizza-slice"></i></div>
+                                                            Categorias de comida
+                                                        </a>
+                                                        <a class="nav-link" href="@Url.Action("FoodBrands", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                                            Local de comida
+                                                        </a>
+                                                    </nav>
+                                                </div>
+                                            }
+                                            if (Session["UserRol"] as String != "Venta" || Session["UserRol"] as String == "Administrador")
+                                            {
+                                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseStore" aria-expanded="false" aria-controls="pagesCollapseError">
+                                                    Tienda
+                                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                                </a>
+                                                <div class="collapse" id="pagesCollapseStore" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                                    <nav class="sb-sidenav-menu-nested nav">
+                                                        <a class="nav-link" href="@Url.Action("StoreProducts", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
+                                                            Productos
+                                                        </a>
+                                                        <a class="nav-link" href="@Url.Action("StoreCategories", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                                            Categorias
+                                                        </a>
+                                                        <a class="nav-link" href="@Url.Action("StoreBrands", "Maintainer")">
+                                                            <div class="sb-nav-link-icon"><i class="fas fa-bookmark"></i></div>
+                                                            Marcas
+                                                        </a>
+                                                    </nav>
+                                                </div>
+                                            }
+                                        }
+                                    </nav>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Modulo Administrador</div>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light ">Ir a la pagina principal</a>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <!--   CONTENIDO   -->
+                <div class="container-fluid px-4">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <!--   FOOTER   -->
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Casa Parker Project &copy; @DateTime.Now.Year </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!--   SCRIPTS NECESARIOS   -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

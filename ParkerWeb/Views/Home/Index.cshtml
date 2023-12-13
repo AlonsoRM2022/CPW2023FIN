@@ -1,0 +1,265 @@
+﻿@model List<ParkerWeb.Models.BlogModel.Posts>
+@{
+    //ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="showcase-areaTienda" id="showcase">
+    <div class="overlay"></div>
+    <div class="showcase-container">
+        <h1 class="main-title" id="home">¡Bienvenido a Casa Parker Web!</h1>
+        <p>Descubre un poco más sobre nosotros</p>
+        @*<a href="#food-menu" class="btn btn-primary mb-3">Noticias</a>*@
+    </div>
+</section>
+
+<section id="about">
+    <div class="about-wrapper container">
+        <div class="about-text">
+            <p class="small">Te esperamos</p>
+            <h2>Casa Parker Project</h2>
+            <p>
+                Un nuevo espacio en Alajuela para compartir y expresar
+            </p>
+            <a href="#SectionPosts" class="btn btn-dark ">Ver Publicaciónes</a>
+        </div>
+        <div class="about-img">
+            <img src="https://drive.google.com/uc?export=view&id=1OGcXZQZbURRMCvUNGbVazB5wXeBNEz4X" alt="" class="shadow rounded-lg" />
+        </div>
+    </div>
+</section>
+
+<!-- Page header with logo and tagline-->
+@*<div class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">¡No te perdas ni un detalle!</h1>
+                <p class="lead mb-0">Reviví nuetras historias o enterate de nuestros proximos evendos</p>
+                <p class="lead mb-0">Te lo contamos todo a continuaci&oacute;n</p>
+            </div>
+        </div>
+    </div>*@
+
+<section>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicadores -->
+        <ol class="carousel-indicators">
+            <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+            <!-- Agrega más indicadores según el número de imágenes -->
+        </ol>
+
+        <!-- Imágenes del carrusel -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://drive.google.com/uc?export=view&id=1OGcXZQZbURRMCvUNGbVazB5wXeBNEz4X" alt="" class="d-block w-100">
+                <div class="carousel-overlay">
+                    <h3>Martes De Artes</h3>
+                    <p>Todos los martes 8pm - 11pm</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://drive.google.com/uc?export=view&id=1OGcXZQZbURRMCvUNGbVazB5wXeBNEz4X" alt="" class="d-block w-100">
+                <div class="carousel-overlay">
+                    <h3>Jueves Acustico</h3>
+                    <p>Todos los jueves 8pm - 11pm</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://drive.google.com/uc?export=view&id=1OGcXZQZbURRMCvUNGbVazB5wXeBNEz4X" alt="" class="d-block w-100">
+                <div class="carousel-overlay">
+                    <h3>Domingos de Limpieza</h3>
+                    <p>Pronta informaci&oacute;n</p>
+                </div>
+            </div>
+            <!-- Agrega más divs con la clase "carousel-item" para más imágenes -->
+        </div>
+
+        <!-- Controles de navegación -->
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </a>
+    </div>
+
+</section>
+
+<!-- Section-->
+<section id="SectionPosts">
+    <h2 class="food-menu-heading">Publicaci&oacute;nes</h2>
+    <div class="container-fluid px-5 my-5">
+        <div class="row">
+            <div class="col-sm-2">
+                @*<div class="card shadow-lg mb-3 bg-body rounded">
+                    <div class="card-header bg-dark text-white">
+                        Buscar una publicaci&oacute;n
+                    </div>
+                    <div id="containerSearchPost" class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Titulo del post" aria-label="Enter search term..." aria-describedby="button-search" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>*@
+                @*<div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="d-grid gap-2">
+                            <button id="btnApplyFilter" class="btn btn-dark bg-gradient btn-block shadow rounded-lg mt-3" type="button">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+            <div class="col-lg-8">
+                <div id="containerPosts" class="row gx-3 gx-lg-4 row-cols-1 mx-3 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card mb-4 h-100 shadow-lg rounded bg-body">
+                            @*  <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>*@
+                            <div class="card-body">
+                                <div class="small text-muted">January 1, 2023</div>
+                                <h2 class="card-title">Featured Post Title</h2>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                                <a class="btn btn-dark" href="@Url.Action("Publication","Home")">Read more →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2"></div>
+
+        </div>
+    </div>
+</section>
+<!-- Page content-->
+
+<section id="about">
+    <div class="about-wrapper container">
+        <div class="about-text">
+            <p class="small">Ubicaci&oacute;n</p>
+            <h2>Casa Parker Project</h2>
+            <p>
+                Puedes encontrarnos en
+            </p>
+        </div>
+        <div class="about-img">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.0255815494306!2d-84.21592052540507!3d10.014745472781717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0f973bf7e7f4d%3A0x2f1a7fef5e1874b8!2sCasa%20Parker!5e0!3m2!1ses!2scr!4v1690432378700!5m2!1ses!2scr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            //printPosts("Prueba");
+            printPublications();
+        })
+
+        //function convertToReadableDate(dateString) {
+        //    const regex = /\/Date\((\d+)\)\//;
+        //    const match = regex.exec(dateString);
+        //    if (match) {
+        //        const timestamp = parseInt(match[1]);
+        //        return new Date(timestamp);
+        //    }
+        //    return null;
+        //}
+
+        function formatDateFromServer(dateString) {
+            const timestamp = parseInt(dateString.match(/\d+/)[0]);
+            const date = new Date(timestamp);
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        function truncateContent(content, maxLength) {
+            if (content.length > maxLength) {
+                return content.substring(0, maxLength) + '...';
+            } else {
+                return content;
+            }
+        }
+
+        function printPosts(title) {
+            jQuery.ajax({
+                url: "@Url.Action("ListPosts", "Home")",
+                type: "POST",
+                data: JSON.stringify({ publication: title }),
+                //type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $("#containerPosts").LoadingOverlay("hide");
+                    $("#containerPosts").html("");
+                    $.each(response.data, function (i, element)
+                    {
+                        $("<div>").addClass("col mb-5").append(
+                            $("<div>").addClass("card mb-4 h-100 shadow-lg rounded bg-body").append(
+                                $("<div>").addClass("card-body").append(
+                                    $("<div>").addClass("small text-muted").text(element.postDate),
+                                    $("<h2>").addClass("ard-title").text(element.postTitle),
+                                    //$("<p>").addClass("card-text").text(element.postContent),
+                                    $("<a>").addClass("btn btn-dark")
+                                        .attr({ "href": "@Url.Action("Publication", "Home")" + "?idPost=" + element.postID })
+                                        .text("Ver nota completa")
+                                )
+                            )
+                        ).appendTo("#containerPosts")
+                    })
+                },
+                beforeSend: function () {
+                    $("#containerPosts").LoadingOverlay("show");
+                }
+            })
+        }
+
+         function printPublications()
+        {
+            jQuery.ajax({
+                url: "@Url.Action("ListPublications", "Home")",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response)
+                {
+                    $("#containerPosts").LoadingOverlay("hide");
+                    $("#containerPosts").html("");
+                    $.each(response.data, function (i, element)
+                    {
+                        $("<div>").addClass("col mb-5").append(
+                            $("<div>").addClass("card mb-4 h-100 shadow-lg rounded bg-body").append(
+                                $("<div>").addClass("card-body").append(
+                                    $("<div>").addClass("small text-muted").text(formatDateFromServer(element.postDate)),
+                                    $("<h2>").addClass("ard-title").text(element.postTitle),
+                                    $("<p>").addClass("card-text").html(truncateContent(element.postContent, 10)),
+                                    $("<a>").addClass("btn btn-dark")
+                                        .attr({ "href": "@Url.Action("Publication", "Home")" + "?idPost=" + element.postID })
+                                        .text("Ver nota completa")
+                                )
+                            )
+                        ).appendTo("#containerPosts")
+                    })
+                },
+                beforeSend: function ()
+                {
+                    $("#containerPosts").LoadingOverlay("show");
+                }
+            })
+        }
+
+    </script>
+
+
+
+
+
+}

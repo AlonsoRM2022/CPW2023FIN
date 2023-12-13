@@ -1,0 +1,107 @@
+﻿@model ParkerWeb.Models.BlogModel.Posts
+@{
+    //ViewBag.Title = "Publication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime postDate = Model.postDate;
+    string formattedDate = postDate.ToString("dd/MM/yyyy");
+}
+
+<section class="showcase-areaTienda" id="showcase">
+    <div class="overlay"></div>
+    <div class="showcase-container">
+        <h1 class="main-title" id="home">Casa Parker</h1>
+        <p>Blog</p>
+    </div>
+</section>
+
+<br />
+
+<div class="row mb-3">
+    <div class="col-sm-1"></div>
+        <div class="col-sm-2">
+            <div class="d-grid gap-2">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-dark" type="button">
+                    <i class="fas fa-undo-alt"></i> Regresar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Post content-->
+                <article>
+                    <!-- Post header-->
+                    <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1">@Html.DisplayTextFor(p => p.postTitle)</h1>
+                        <!-- Post meta content-->
+                        <div class="text-muted fst-italic mb-2">Publicado el @formattedDate by @Html.DisplayTextFor(p => p.objUser.userName) @Html.DisplayTextFor(p => p.objUser.userLastName)</div>
+                        <!-- Post categories-->
+                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                    </header>
+                    <!-- Preview image figure-->
+                    @*<figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>*@
+                    <!-- Post content-->
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4">@Html.Raw(Model.postContent)  </p>
+                    </section>
+                </article>
+                <!-- Comments section-->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="5"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Side widgets-->
+            <!--<div class="col-lg-4">-->
+            <!-- Search widget-->
+            <!--<div class="card mb-4">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                    </div>
+                </div>
+            </div>-->
+            <!-- Categories widget-->
+            <!--<div class="card mb-4">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">Web Design</a></li>
+                                <li><a href="#!">HTML</a></li>
+                                <li><a href="#!">Freebies</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">JavaScript</a></li>
+                                <li><a href="#!">CSS</a></li>
+                                <li><a href="#!">Tutorials</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!-- Side widget-->
+            <!--<div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v17.0" nonce="89LZBNra"></script>
+

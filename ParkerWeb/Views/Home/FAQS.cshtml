@@ -1,0 +1,109 @@
+﻿@{
+    @*ViewBag.Title = "Preguntas Frecuentes";*@
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="showcase-areaTienda" id="showcase">
+    <div class="showcase-container">
+        <h1 class="main-title" id="home">Preguntas Frecuentes</h1>
+        <p>Todo lo que necesitas saber</p>
+        @*<a href="#food-menu" class="btn btn-primary mb-3">Noticias</a>*@
+    </div>
+</section>
+
+<section id="about">
+    <div class="about-wrapper container">
+        <div class="about-text">
+            <p class="small">FAQS</p>
+            <h2>Casa Parker Project</h2>
+            <p>
+                Sabemos que siempre pueden surgir dudas, por eso aqui te brindamos algunas de las consultas m&aacute;s frecuentes y te brindamos su respuesta
+            </p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark ">Ir a la pagina principal</a>
+            <a href="#sectionFAQS" class="btn btn-outline-dark ">Ir a las preguntas frecuentes</a>
+        </div>
+        <div class="about-img">
+            <img src="https://drive.google.com/uc?export=view&id=1OGcXZQZbURRMCvUNGbVazB5wXeBNEz4X" alt="" class="shadow rounded-lg" />
+        </div>
+    </div>
+</section>
+
+<section id="sectionFAQS">
+    <h2 class="food-menu-heading">Preguntas</h2>
+    <div id="containerFAQS">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h2 class="FQ-H">
+                    Question Item #1
+                </h2>
+                    <h4 class="FQ-B">
+                        Question Body Item #1
+                    </h4>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h2 class="FQ-H">
+                    Question Item #2
+                </h2>
+                    <h4 class="FQ-B">
+                        Question Body Item #2
+                    </h4>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        </div>
+
+</section>
+
+
+
+@section scripts{
+    <script>
+
+
+
+        $(document).ready(function ()
+    {
+        printFAQS();
+    })
+
+            function printFAQS()
+{
+    jQuery.ajax({
+        url: "@Url.Action("ListFAQS", "Home")",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (response)
+        {
+            $("#containerFAQS").html("");
+            $("#containerFAQS").LoadingOverlay("hide");
+            $.each(response.data, function (i, element)
+            {
+                $("<div>").addClass("row").append(
+                    $("<div>").addClass("col-md-1"),
+                        $("<div>").addClass("col-md-10").append(
+                            $("<h2>").addClass("FQ-H").text(element.questionTitle),
+                            $("<h4>").addClass("FQ-B").text(element.questionBody)
+                    ),
+                        $("<div>").addClass("col-md-1")
+                    ).appendTo("#containerFAQS")
+            })
+        },
+        beforeSend: function ()
+        {
+            $("#containerFAQS").LoadingOverlay("show");
+        }
+    })
+}
+
+
+
+    </script>
+}

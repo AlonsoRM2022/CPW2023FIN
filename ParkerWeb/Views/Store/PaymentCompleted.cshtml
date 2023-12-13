@@ -1,0 +1,30 @@
+﻿
+@{
+    //ViewBag.Title = "PagoConcretado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <br /><br />
+        @{
+            if ((bool)ViewData["Status"])
+            {
+                <h1 class="text-success">Gracias por su compra!</h1>
+                <i class="far fa-check-circle fa-9x text-success"></i>
+                <h2 class="text-success">Su pago ha sido realizado correctamente</h2>
+                <h4>Transacción: @ViewData["saleTransactionID"]</h4>
+                <br />
+                <a href="@Url.Action("Index","Store")" class="btn btn-primary">Volver a la Tienda</a>
+            }
+            else
+            {
+                <h1 class="text-danger">Lo sentimos</h1>
+                <i class="far fa-exclamation-circle fa-9x text-danger"></i>
+                <h2 class="text-warning">Error al concretar la compra</h2>
+                <br />
+                <a href="@Url.Action("Index","Store")" class="btn btn-primary">Volver a la Tienda</a>
+            }
+        }
+    </div>
+</div>
