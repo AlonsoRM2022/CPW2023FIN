@@ -145,5 +145,34 @@ namespace ParkerWeb.Models.BlogModel
             }
             return response;
         }
+
+
+        public bool Delete(int id, out string message) 
+        {
+            bool response = false;
+            message = string.Empty;
+            try
+            {
+                using (SqlConnection objConnection = new SqlConnection(CD_Connection.db_Connection))
+                {
+                    SqlCommand cmd = new SqlCommand("delete top(1) from Posts where postID = @id", objConnection);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
+                    objConnection.Open();
+                    response = cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                response = false;
+                message = ex.Message;
+
+            }
+            return response;
+        }
+
+
+
     }
 }

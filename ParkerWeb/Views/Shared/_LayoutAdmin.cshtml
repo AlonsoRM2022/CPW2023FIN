@@ -19,7 +19,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!"><b>@User.Identity.Name</b></a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="@Url.Action("SignOff", "Access")">Cerrar Sesion</a></li>
+                    <li><a class="dropdown-item" href="@Url.Action("SignOff", "Access")">Cerrar Sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -51,7 +51,7 @@
                                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                                     Dashboard
                                                 </a>*@
-                                                <a class="nav-link" href="@Url.Action(@*"SalesReport", "Admin"*@)">
+                                                <a class="nav-link" href="@Url.Action("Index", "Admin")">
                                                     <div class="sb-nav-link-icon"><i class="fas fa-dollar-sign"></i></div>
                                                     Historial de Ventas
                                                 </a>
@@ -122,7 +122,7 @@
                                             if (Session["UserRol"] as String != "Arte" || Session["UserRol"] as String == "Administrador")
                                             {
                                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseGallery" aria-expanded="false" aria-controls="pagesCollapseError">
-                                                    Galeria
+                                                    Galería
                                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                                 </a>
                                                 <div class="collapse" id="pagesCollapseGallery" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
@@ -133,7 +133,7 @@
                                                         </a>
                                                         <a class="nav-link" href="@Url.Action("ArtCategories", "Maintainer")">
                                                             <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
-                                                            Categorias
+                                                            Categorías
                                                         </a>
                                                     </nav>
                                                 </div>
@@ -152,7 +152,7 @@
                                                         </a>
                                                         <a class="nav-link" href="@Url.Action("FoodCategories", "Maintainer")">
                                                             <div class="sb-nav-link-icon"><i class="fas fa-pizza-slice"></i></div>
-                                                            Categorias de comida
+                                                            Categorías de comida
                                                         </a>
                                                         <a class="nav-link" href="@Url.Action("FoodBrands", "Maintainer")">
                                                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -175,7 +175,7 @@
                                                         </a>
                                                         <a class="nav-link" href="@Url.Action("StoreCategories", "Maintainer")">
                                                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                                            Categorias
+                                                            Categorías
                                                         </a>
                                                         <a class="nav-link" href="@Url.Action("StoreBrands", "Maintainer")">
                                                             <div class="sb-nav-link-icon"><i class="fas fa-bookmark"></i></div>
@@ -192,8 +192,8 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Modulo Administrador</div>
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light ">Ir a la pagina principal</a>
+                    <div class="small">Módulo Administrador</div>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light ">Ir a la página principal</a>
                 </div>
             </nav>
         </div>

@@ -5,9 +5,10 @@
 }
 
 <section class="showcase-areaTienda" id="showcase">
+    <div class="overlay"></div>
     <div class="showcase-container">
         <h1 class="main-title" id="home">Casa Parker</h1>
-        <p>Detalles sobre nuestros Artículos</p>
+        <p>Detalles sobre nuestros productos</p>
     </div>
 </section>
 
@@ -34,18 +35,17 @@
                         </a>
 
                         @*@if (Session["User"] != null)
-                        {
-                            <button class="btn btn-success agregarCarrito flex-shrink-0 w-50" type="button" data-productID="@Html.DisplayTextFor(p => p.productID)">
-                                <i class="fas fa-cart-plus me-1"></i> Agregar al carrito
-                            </button>
-                        }*@
+                            {
+                                <button class="btn btn-success agregarCarrito flex-shrink-0 w-50" type="button" data-productID="@Html.DisplayTextFor(p => p.productID)">
+                                    <i class="fas fa-cart-plus me-1"></i> Agregar al carrito
+                                </button>
+                            }*@
                     </div>
                 </div>
             </div>
         </div>
-        </div>
     </section>
-
+</section>
 
 
     @section scripts{

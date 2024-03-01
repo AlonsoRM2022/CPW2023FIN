@@ -18,7 +18,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success" onclick="callModal(null)">Nuevo Producto</button>
+                <button type="button" class="btn btn-success" onclick="callModal(null)">Nueva Comida</button>
             </div>
         </div>
         <hr /> <!--    LINEA DE DIVISION    -->
@@ -28,8 +28,8 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Descripci&oacute;n </th>
-                    <th>Precio ?</th>
-                    <th>Categoria </th>
+                    <th>Precio $</th>
+                    <th>Categoría </th>
                     <th>Propietario </th>
                     <th>Status </th>
                     <th>Acciones</th>
@@ -47,7 +47,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Producto</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comida</h1>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> <!--    X    -->
             </div>
             <!--    FORMULARIO    -->
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="mb-3">
-                            <label class="form-label">Precio ?</label>
+                            <label class="form-label">Precio $</label>
                             <input type="text" class="form-control" id="txtFoodPrice" name="precio" autocomplete="off" required />
                         </div>
                         <div class="mb-3">
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="mb-3">
-                            <label class="form-label">Categoria</label>
+                            <label class="form-label">Categoría</label>
                             <select id="cboFoodCategorie" class="form-select" required>
                             </select>
                         </div>
@@ -178,7 +178,7 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccione una categor�a").appendTo("#cboFoodCategorie");
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccione una categoría").appendTo("#cboFoodCategorie");
                 $.each(data.data, function (index, item)
                 {
                     $("<option>").attr({ "value": item.categoryID }).text(item.categoryName).appendTo("#cboFoodCategorie");

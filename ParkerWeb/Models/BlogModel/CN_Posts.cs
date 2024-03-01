@@ -73,6 +73,13 @@ namespace ParkerWeb.Models.BlogModel
             return objCapaDato.SaveDataImg(obj, out message);
         }
 
+
+
+
+        public bool Delete(int id, out string message) 
+        {
+            return objCapaDato.Delete(id, out message);
+        }
         //-----------------------------------------------------------------------------------------------
         //public bool CN_DeleteFood(int id, out string message)    //     ELIMINAR FoodO
         //{

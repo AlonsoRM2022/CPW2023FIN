@@ -162,5 +162,15 @@ namespace ParkerWeb.Controllers.Maintainer
 
             return null;
         }
+
+        [HttpPost]
+        public JsonResult Delete(int id) 
+        {
+            bool response = false;
+            string message = string.Empty;
+
+            response = new CN_Posts().Delete(id, out message);
+            return Json(new { response = response, message = message}, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -22,7 +22,7 @@
     </div>
     <div class="form-floating mb-3">
         @Html.TextBoxFor(m => m.userMail, new { @class = "form-control", autocomplete = "off", @id = "txtMail", @placeholder = ".", value = ViewData["userMail"], required = "required", data_msg_required = "Por favor, ingresa un correo" })
-        @Html.Label("txtMail", "Correo electronico")
+        @Html.Label("txtMail", "Correo electrónico")
     </div>
 
     @{
@@ -39,7 +39,7 @@
         <div class="d-grid">
             <button class="btn btn-dark btn-block mb-2" type="submit">Crear cuenta</button>
             <a class="btn btn-dark btn-block mb-2" href="@Url.Action("Index","Access")">Iniciar Sesión</a>
-            <a class="btn btn-dark btn-block mb-2" href="@Url.Action("Index","Home")">Pagina Principal</a>
+            <a class="btn btn-dark btn-block mb-2" href="@Url.Action("Index","Home")">Página Principal</a>
         </div>
     </div>
 </form>

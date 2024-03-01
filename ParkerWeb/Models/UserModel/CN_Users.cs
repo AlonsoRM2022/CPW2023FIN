@@ -36,12 +36,9 @@ namespace ParkerWeb.Models.UserModel
             // Si no hubo errores de validación
             if (string.IsNullOrEmpty(message))
             {
-                int userId = objCapaDato.AddUser(obj, out message);
-                if (userId > 0)
-                {
-                    string psswd = CN_Resources.AutoGenerateKey(); // Se genera una clave automatica
-                    string subject = "Cuenta de Casa Parker"; // Asunto del correo
-                    string bodyMail = @"
+                string psswd = CN_Resources.AutoGenerateKey(); // Se genera una clave automatica
+                string subject = "Cuenta de Casa Parker"; // Asunto del correo
+                string bodyMail = @"
                                         <!DOCTYPE html>
                                         <html>
                                         <head>
@@ -67,22 +64,22 @@ namespace ParkerWeb.Models.UserModel
                                             </div>
                                         </body>
                                         </html>";
-                    bodyMail = bodyMail.Replace("!nombre!", obj.userName); // Se remplaza el texto del correo por el nombre
-                    bodyMail = bodyMail.Replace("!apellidos!", obj.userLastName); // Se remplaza el texto del correo por el apellido
-                    bodyMail = bodyMail.Replace("!clave!", psswd); // Se remplaza el texto del correo por la clave generada automaticamente
+                bodyMail = bodyMail.Replace("!nombre!", obj.userName); // Se remplaza el texto del correo por el nombre
+                bodyMail = bodyMail.Replace("!apellidos!", obj.userLastName); // Se remplaza el texto del correo por el apellido
+                bodyMail = bodyMail.Replace("!clave!", psswd); // Se remplaza el texto del correo por la clave generada automaticamente
+                obj.userPassword = CN_Resources.ConvertToSha256(psswd);
+
+                int userId = objCapaDato.AddUser(obj, out message);
+                if (userId > 0)
+                {
+                    
                     bool response = CN_Resources.SendMail(obj.userMail, subject, bodyMail); // Se envia el correo 
-                    if (response) // Si el correo se envió correctamente
+                    if (!response) // Si el correo se envió correctamente
                     {
-                        obj.userPassword = CN_Resources.ConvertToSha256(psswd); //  ENCRIPTAR CONTRASEÑA
+                        
+                    }
                         return userId; //  RETORNAR ID DEL USUARIO REGISTRADO
-                    }
-                    else
-                    {
-                        // Si no se pudo enviar el correo, podrías eliminar el usuario registrado
-                        message = "No se puede enviar el correo. El usuario no se registró.";
-                        // También podrías agregar aquí lógica para eliminar el usuario que se agregó previamente.
-                        return 0; // Otra indicación de error, si es necesario.
-                    }
+               
                 }
                 else
                 {
@@ -127,7 +124,7 @@ namespace ParkerWeb.Models.UserModel
                 bodyMail = bodyMail.Replace("!nombre!", obj.userName);
                 bodyMail = bodyMail.Replace("!apellidos!", obj.userLastName);
                 bodyMail = bodyMail.Replace("!clave!", psswd);
-
+                obj.userPassword = CN_Resources.ConvertToSha256(psswd);
                 // Realizar el registro del cliente
                 int userId = objCapaDato.AddCustomer(obj, out message);
 

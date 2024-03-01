@@ -34,7 +34,7 @@
                     <th>Contenido </th>
                     <th>Fecha </th>
                     <th>Usuario</th>
-                    @*<th>Acciones </th>*@
+                    <th>Acciones </th>
                 </tr>
             </thead>
             <tbody>
@@ -152,12 +152,64 @@
                 "data": "objUser", "render": function (data) {
                     return data.userName
                 }
+            },
+            {
+                "defaultContent": '<button type="button" class="btn-sm btn-danger btnDelete"><i class="fas fa-trash me-1"></i></button>',
+                "orderable": false,
+                "searchable": false,
+                "width": "90px"
             }
         ],
         "language": {
             "url":"https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
         }
     });
+
+
+        /*----------------ELIMINAR DEL BLOG-----------------*/
+        var tableData;
+        var selected;
+
+        $("#tablePosts tbody").on("click", '.btnDelete', function () {
+
+            var postSel = $(this).closest("tr");
+            var data = tableData.row(postSel).data();
+
+            swal({
+                title: "¿Eliminar?",
+                text: "¿Desea eliminar la publicación?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+
+                    jQuery.ajax({
+                        url: '@Url.Action("Delete", "Blog")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.postID }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            if (data.response) {
+                                tableData.row(postSel).remove().draw();
+                            } else {
+                                swal("No se pudo eliminar", data.Message, "error")
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    });
+
+                });
+
+            console.log(data);
+        })
+
 
 
     jQuery.ajax({
@@ -238,6 +290,9 @@
     }
 }
 
+
+
+
         /*      MODAL     */
         function callModal(json) {
             $("#txtPostID").val(0);
@@ -254,6 +309,7 @@
             }
             $("#FormModal").modal("show");
         }
+
 
 
         $("#txtPostContent").on('froalaEditor.contentChanged', function (e, editor) {

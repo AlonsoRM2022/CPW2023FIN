@@ -70,14 +70,14 @@
                             <label class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="txtProductName" name="nombre" required />
                             <div class="invalid-feedback">
-                                Por favor ingresa un nombre v�lido.
+                                Por favor ingresa un nombre válido.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descripcion</label>
                             <textarea type="text" class="form-control" id="txtProductDescription" name="descripcion" style="height:125px;resize:none" required></textarea>
                             <div class="invalid-feedback">
-                                Por favor ingresa un texto v�lido.
+                                Por favor ingresa un texto válido.
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             <label class="form-label">Precio $</label>
                             <input type="text" class="form-control" id="txtProductPrice" name="precio" autocomplete="off" required />
                             <div class="invalid-feedback">
-                                Por favor ingresa un formato v�lido.
+                                Por favor ingresa un formato válido.
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,7 +95,7 @@
                                 <select id="cboBrands" class="form-select" required>
                                 </select>
                                 <div class="invalid-feedback">
-                                    Por favor, selecciona una opci�n.
+                                    Por favor, selecciona una opción.
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -103,7 +103,7 @@
                                 <select id="cboCategories" class="form-select" required>
                                 </select>
                                 <div class="invalid-feedback">
-                                    Por favor, selecciona una opci�n.
+                                    Por favor, selecciona una opción.
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                             <label class="form-label">Stock</label>
                             <input type="number" class="form-control" id="txtProductStock" name="stock" required />
                             <div class="invalid-feedback">
-                                Por favor ingrese un formato v�lido.
+                                Por favor ingrese un formato válido.
                             </div>
                         </div>
                         <div class="mb-3">
@@ -226,7 +226,7 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccione una categor�a").appendTo("#cboCategories");
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccione una categoría").appendTo("#cboCategories");
                 $.each(data.data, function (index, item)
                 {
                     $("<option>").attr({ "value": item.categoryID }).text(item.categoryName).appendTo("#cboCategories");

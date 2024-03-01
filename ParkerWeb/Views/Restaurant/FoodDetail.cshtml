@@ -4,6 +4,7 @@
 }
 
 <section class="showcase-areaTienda" id="showcase">
+    <div class="overlay"></div>
     <div class="showcase-container">
         <h1 class="main-title" id="home">Casa Parker</h1>
         <p>Detalles sobre nuestras comidas</p>
@@ -20,7 +21,7 @@
                     <h1 class="display-5 fw-bolder" style="text-align:center;"> @Html.DisplayTextFor(p => p.foodName)</h1>
                     <p class="lead" style="text-align:center;">@Html.DisplayTextFor(p => p.foodDescription)</p>
                     <div class="fs-5 mb-5" style="text-align:center;">
-                        <span>Precio: ₡ @Html.DisplayTextFor(p => p.foodPrice)</span>
+                        <span>Precio: $ @Html.DisplayTextFor(p => p.foodPrice)</span>
                     </div>
 
                     <div class="d-flex">
